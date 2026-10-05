@@ -1,0 +1,18 @@
+title: RDP Brute Force Attempt
+id: test-soc-001
+status: experimental
+level: medium
+description: Multiple 4625 failed RDP logons from same src_ip followed by 4624 success
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_fail:
+    EventID: 4625
+    LogonType: 10
+  condition: selection_fail | count(SourceIP) by TargetUserName > 4
+falsepositives:
+  - Legit user typo (low count)
+tags:
+  - attack.t1110.001
+  - attack.credential_access

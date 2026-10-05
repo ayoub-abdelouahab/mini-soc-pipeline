@@ -1,0 +1,13 @@
+TimeCreated,EventID,Computer,TargetUserName,SourceIP,LogonType,Status,Details
+2026-10-04T14:03:00Z,4625,DC01.corp.local,Administrator,192.168.1.105,10,0xC000006D,Failed RDP logon - bad password
+2026-10-04T14:03:00Z,4625,DC01.corp.local,Administrator,192.168.1.105,10,0xC000006D,Failed RDP logon
+2026-10-04T14:04:00Z,4625,DC01.corp.local,Administrator,192.168.1.105,10,0xC000006D,Failed RDP logon
+2026-10-04T14:04:00Z,4625,DC01.corp.local,Administrator,192.168.1.105,10,0xC000006D,Failed RDP logon
+2026-10-04T14:05:00Z,4625,DC01.corp.local,Administrator,192.168.1.105,10,0xC000006D,Failed RDP logon - 5th attempt
+2026-10-04T14:06:00Z,4624,DC01.corp.local,Administrator,192.168.1.105,10,0x0,Successful RDP logon after brute force
+2026-10-04T14:06:00Z,4672,DC01.corp.local,Administrator,-,-,0x0,Special privileges assigned (SeDebugPrivilege)
+2026-10-04T14:07:00Z,4688,WS01.corp.local,Administrator,-,-,0x0,New process: powershell.exe -Enc ...
+2026-10-04T14:09:00Z,4688,WS01.corp.local,Administrator,-,-,0x0,New process: mimikatz.exe
+2026-10-04T14:12:00Z,7045,WS02.corp.local,SYSTEM,-,-,0x0,Service PSEXESVC installed
+2026-10-04T14:12:00Z,4624,WS02.corp.local,Administrator,10.0.1.10,3,0x0,Network logon from WS01 (PsExec)
+2026-10-04T14:00:00Z,4624,WS01.corp.local,j.doe,10.0.1.10,2,0x0,Benign interactive logon

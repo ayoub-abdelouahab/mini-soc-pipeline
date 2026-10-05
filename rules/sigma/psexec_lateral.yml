@@ -1,0 +1,22 @@
+title: PsExec Lateral Movement
+id: test-soc-004
+status: experimental
+level: high
+description: PSEXESVC service creation + network 445/135
+logsource:
+  product: windows
+detection:
+  selection_svc:
+    EventID: 7045
+    ServiceName|contains: 'PSEXESVC'
+  selection_proc:
+    Image|contains: 'PSEXESVC'
+  selection_net:
+    DestinationPort:
+      - 445
+      - 135
+    Image|contains: 'PSEXESVC'
+  condition: selection_svc or selection_proc or selection_net
+tags:
+  - attack.t1570
+  - attack.lateral_movement

@@ -1,0 +1,11 @@
+timestamp,src_ip,src_port,dst_ip,dst_port,proto,bytes,flow,note
+2026-10-04T14:01:00Z,10.0.1.10,52341,142.250.179.14,443,tcp,12400,benign,chrome tls
+2026-10-04T14:03:00Z,192.168.1.105,41122,10.0.1.10,3389,tcp,800,suspicious,RDP brute force attempt 1
+2026-10-04T14:04:00Z,192.168.1.105,41123,10.0.1.10,3389,tcp,800,suspicious,RDP brute force attempt 2
+2026-10-04T14:05:00Z,192.168.1.105,41124,10.0.1.10,3389,tcp,2400,suspicious,RDP brute force burst
+2026-10-04T14:06:00Z,192.168.1.105,41125,10.0.1.10,3389,tcp,5400,malicious,RDP success + session
+2026-10-04T14:07:00Z,10.0.1.10,52355,192.168.1.105,80,tcp,150000,malicious,payload.ps1 download (http)
+2026-10-04T14:08:00Z,10.0.1.10,52360,8.8.8.8,53,udp,128,benign,dns query
+2026-10-04T14:12:00Z,10.0.1.10,49111,10.0.1.12,445,tcp,98000,malicious,SMB PsExec to WS02
+2026-10-04T14:12:00Z,10.0.1.10,49112,10.0.1.12,135,tcp,1200,malicious,RPC lateral
+2026-10-04T14:15:00Z,10.0.1.12,49155,10.0.1.10,445,tcp,3000,benign,normal smb keepalive

