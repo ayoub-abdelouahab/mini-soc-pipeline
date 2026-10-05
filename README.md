@@ -277,10 +277,3 @@ MIT — free for personal and educational use.
 
 ---
 
-### Push to GitHub (if not already pushed)
-
-```bash
-git add README.md
-git commit -m "docs: add comprehensive README with run instructions"
-git push origin main
-```
